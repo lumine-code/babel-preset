@@ -54,6 +54,12 @@
   },
   "keywords": [
     "babel",
-    "babel-preset"
+    "babel-preset",
+    "transpiler",
+    "javascript",
+    "typescript",
+    "react",
+    "electron",
+    "flow"
   ]
 }
