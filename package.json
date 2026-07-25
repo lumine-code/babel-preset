@@ -2,7 +2,7 @@
   "name": "@lumine-code/babel-preset",
   "author": "lumine-code",
   "version": "6.0.0",
-  "description": "Provides the Babel configuration used to transpile Lumine packages.",
+  "description": "Provides the shared Babel configuration used to transpile packages.",
   "homepage": "https://github.com/lumine-code/babel-preset",
   "repository": "https://github.com/lumine-code/babel-preset",
   "bugs": "https://github.com/lumine-code/babel-preset/issues",

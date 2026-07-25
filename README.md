@@ -1,6 +1,6 @@
-# @lumine-code/babel-preset
+# babel-preset
 
-Provides the Babel configuration used to transpile Lumine packages.
+Provides the shared Babel configuration used to transpile packages.
 
 ## Features
 
