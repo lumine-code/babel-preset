@@ -214,11 +214,11 @@ Enable `"@babel/preset-typescript"`. `true` by default. You can also pass an obj
 
 9. `removeAllUseStrict`
 
-Remove all `'use strict'` from all files. Passed to [`babel-plugin-transform-not-strict`](https://github.com/atom-ide-community/babel-plugin-transform-not-strict#usage-remove-all). This is `false` by default.
+Remove every `'use strict'` directive, whatever triggered it. This is `false` by default.
 
 10. `notStrictDirectiveTriggers` and `notStrictCommentTriggers`
 
-These specify `"not strict"` triggers. Passed to [`babel-plugin-transform-not-strict`](https://github.com/atom-ide-community/babel-plugin-transform-not-strict#usage-extra-directive-or-comment-triggers).
+These specify which directives and leading comments mark a file as "not strict", so its `'use strict'` is dropped. They default to `["use babel"]` and `["@babel", "@flow", "* @babel", "* @flow"]`.
 
 ## Behind the scenes
 

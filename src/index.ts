@@ -152,7 +152,7 @@ module.exports = (_api: ConfigAPI, options: Options, _dirname: string): InputOpt
 
   if (react !== false) {
     const presetReact = require("@babel/preset-react")
-    // Atom packages still use per-file @jsx pragmas (for example, Etch's
+    // Editor packages still use per-file @jsx pragmas (for example, Etch's
     // `/** @jsx etch.dom */`). Babel 8 defaults to the automatic runtime,
     // which rejects those pragmas, so retain the preset's legacy behavior.
     presets.push(
@@ -206,7 +206,7 @@ module.exports = (_api: ConfigAPI, options: Options, _dirname: string): InputOpt
       plugins.push([
         require("babel-plugin-add-module-exports"),
         { addDefaultProperty: addModuleExportsDefaultProperty },
-      ] as PluginItem) // Atom needs this.
+      ] as PluginItem) // The editor needs this.
     }
   }
 
