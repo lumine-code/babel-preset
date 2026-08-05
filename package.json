@@ -43,6 +43,11 @@
     "@babel/preset-typescript": "^8.0.1",
     "babel-plugin-add-module-exports": "^1.0.4"
   },
+  "lem": {
+    "hold": {
+      "@types/node": "tracks the Node major the editor targets, not the newest published"
+    }
+  },
   "devDependencies": {
     "@babel/core": "^8.0.1",
     "@types/node": "^24.13.3",
