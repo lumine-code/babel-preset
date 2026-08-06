@@ -1,8 +1,6 @@
 {
   "spec_dir": "spec",
-  "spec_files": [
-    "smoke-test.js"
-  ],
+  "spec_files": ["smoke-test.js"],
   "helpers": [],
   "env": {
     "stopSpecOnExpectationFailure": false,

@@ -1,17 +1,17 @@
-const babel = require("@babel/core")
-const preset = require("../dist")
+const babel = require("@babel/core");
+const preset = require("../src");
 
 function transform(source, options = {}, filename = "example.js") {
   return babel.transformSync(source, {
     filename,
     presets: [[preset, options]],
-  }).code
+  }).code;
 }
 
 function evaluateCommonJS(code) {
-  const moduleUnderTest = { exports: {} }
-  Function("module", "exports", code)(moduleUnderTest, moduleUnderTest.exports)
-  return moduleUnderTest.exports
+  const moduleUnderTest = { exports: {} };
+  Function("module", "exports", code)(moduleUnderTest, moduleUnderTest.exports);
+  return moduleUnderTest.exports;
 }
 
 describe("Babel preset", () => {
@@ -24,14 +24,14 @@ describe("Babel preset", () => {
           return input?.value ?? this.value;
         }
       }
-    `)
+    `);
 
-    expect(code).not.toMatch(/["']use strict["']/)
+    expect(code).not.toMatch(/["']use strict["']/);
 
-    const Example = evaluateCommonJS(code)
-    expect(new Example().read(null)).toBe(1)
-    expect(new Example().read({ value: 2 })).toBe(2)
-  })
+    const Example = evaluateCommonJS(code);
+    expect(new Example().read(null)).toBe(1);
+    expect(new Example().read({ value: 2 })).toBe(2);
+  });
 
   it("uses the classic React runtime so per-file JSX pragmas remain valid", () => {
     const code = transform(
@@ -42,10 +42,10 @@ describe("Babel preset", () => {
       `,
       { flow: false, typescript: false },
       "settings-view.js",
-    )
+    );
 
-    expect(code).toMatch(/etch\.dom\("div"/)
-  })
+    expect(code).toMatch(/etch\.dom\("div"/);
+  });
 
   it("supports legacy decorators", () => {
     const code = transform(
@@ -61,11 +61,11 @@ describe("Babel preset", () => {
       `,
       { flow: false, typescript: false },
       "display.js",
-    )
+    );
 
-    expect(code).not.toMatch(/@observer/)
-    expect(evaluateCommonJS(code).observed).toBe(true)
-  })
+    expect(code).not.toMatch(/@observer/);
+    expect(evaluateCommonJS(code).observed).toBe(true);
+  });
 
   it("preserves ES modules when keepModules is enabled", () => {
     const code = transform("export const answer = 42;", {
@@ -73,11 +73,11 @@ describe("Babel preset", () => {
       flow: false,
       react: false,
       typescript: false,
-    })
+    });
 
-    expect(code).toMatch(/export const answer = 42/)
-    expect(code).not.toMatch(/module\.exports|exports\.answer/)
-  })
+    expect(code).toMatch(/export const answer = 42/);
+    expect(code).not.toMatch(/module\.exports|exports\.answer/);
+  });
 
   it("can retain Babel's default-export wrapper", () => {
     const code = transform("export default 42;", {
@@ -85,20 +85,20 @@ describe("Babel preset", () => {
       flow: false,
       react: false,
       typescript: false,
-    })
+    });
 
-    expect(evaluateCommonJS(code)).toEqual({ default: 42 })
-  })
+    expect(evaluateCommonJS(code)).toEqual({ default: 42 });
+  });
 
   it("keeps strict mode when no opt-out trigger is present", () => {
     const code = transform('"use strict"; const answer = 42;', {
       flow: false,
       react: false,
       typescript: false,
-    })
+    });
 
-    expect(code).toMatch(/["']use strict["']/)
-  })
+    expect(code).toMatch(/["']use strict["']/);
+  });
 
   it("honors custom directive and comment triggers for non-strict files", () => {
     const directiveCode = transform('"legacy file"; "use strict";', {
@@ -106,17 +106,17 @@ describe("Babel preset", () => {
       react: false,
       typescript: false,
       notStrictDirectiveTriggers: ["legacy file"],
-    })
+    });
     const commentCode = transform('"use strict"; /* legacy file */\n"another directive";', {
       flow: false,
       react: false,
       typescript: false,
       notStrictCommentTriggers: ["legacy file"],
-    })
+    });
 
-    expect(directiveCode).not.toMatch(/["']use strict["']/)
-    expect(commentCode).not.toMatch(/["']use strict["']/)
-  })
+    expect(directiveCode).not.toMatch(/["']use strict["']/);
+    expect(commentCode).not.toMatch(/["']use strict["']/);
+  });
 
   it("marks every explicitly strict file as non-strict when requested", () => {
     const code = transform('"use strict"; const answer = 42;', {
@@ -124,9 +124,9 @@ describe("Babel preset", () => {
       react: false,
       typescript: false,
       removeAllUseStrict: true,
-    })
+    });
 
-    expect(code).not.toMatch(/["']use strict["']/)
-    expect(code).toMatch(/["']not strict["']/)
-  })
-})
+    expect(code).not.toMatch(/["']use strict["']/);
+    expect(code).toMatch(/["']not strict["']/);
+  });
+});

@@ -1,27 +1,32 @@
-import type { ConfigAPI, InputOptions, PluginAPI, PluginItem, PresetItem } from "@babel/core" with {
-  "resolution-mode": "require",
-}
-
-let keepModulesEnv = false // false by default
+let keepModulesEnv = false; // false by default
 
 if (process.env.BABEL_KEEP_MODULES === "true") {
-  keepModulesEnv = true
+  keepModulesEnv = true;
 }
 
-export type Options = {
-  targets?: InputOptions["targets"]
-  keepModules?: boolean
-  addModuleExports?: boolean
-  addModuleExportsDefaultProperty?: boolean
-  react?: boolean | Record<string, any>
-  flow?: boolean | Record<string, any>
-  typescript?: boolean | Record<string, any>
-  removeAllUseStrict?: boolean
-  notStrictDirectiveTriggers?: string[]
-  notStrictCommentTriggers?: string[]
-}
+/**
+ * @typedef {Object} Options
+ * @property {import("@babel/core").InputOptions["targets"]} [targets]
+ *   Browserslist-style targets; defaults to the editor's Electron runtime.
+ * @property {boolean} [keepModules] Leave ES modules alone instead of
+ *   transforming them to CommonJS. Defaults to the BABEL_KEEP_MODULES
+ *   environment variable.
+ * @property {boolean} [addModuleExports] Add the `module.exports` interop the
+ *   editor relies on. Defaults to true.
+ * @property {boolean} [addModuleExportsDefaultProperty] Also expose `.default`
+ *   alongside it. Defaults to false.
+ * @property {boolean|Record<string, any>} [react] Pass an object to configure
+ *   preset-react, or false to omit it.
+ * @property {boolean|Record<string, any>} [flow]
+ * @property {boolean|Record<string, any>} [typescript]
+ * @property {boolean} [removeAllUseStrict] Strip every "use strict" directive
+ *   rather than only those the triggers below select.
+ * @property {string[]} [notStrictDirectiveTriggers]
+ * @property {string[]} [notStrictCommentTriggers]
+ */
 
-function handleOptions(options: Options) {
+/** @param {Options} options */
+function handleOptions(options) {
   let {
     targets,
     keepModules,
@@ -33,50 +38,50 @@ function handleOptions(options: Options) {
     removeAllUseStrict,
     notStrictDirectiveTriggers,
     notStrictCommentTriggers,
-  } = options
+  } = options;
 
   // Use Lumine's Electron runtime as the default target.
   if (targets === undefined) {
     targets = {
       electron: "43",
-    }
+    };
   }
 
   // if not provided in the options, use the environment variable
   if (keepModules === undefined) {
-    keepModules = keepModulesEnv
+    keepModules = keepModulesEnv;
   }
 
   // add module exports by default
   if (addModuleExports === undefined) {
-    addModuleExports = true
+    addModuleExports = true;
   }
 
   // do not add default property by default
   if (addModuleExportsDefaultProperty === undefined) {
-    addModuleExportsDefaultProperty = false
+    addModuleExportsDefaultProperty = false;
   }
 
   if (react === undefined) {
-    react = true
+    react = true;
   }
 
   if (flow === undefined) {
-    flow = true
+    flow = true;
   }
 
   if (typescript === undefined) {
-    typescript = true
+    typescript = true;
   }
 
   if (removeAllUseStrict === undefined) {
-    removeAllUseStrict = false
+    removeAllUseStrict = false;
   }
   if (notStrictDirectiveTriggers === undefined) {
-    notStrictDirectiveTriggers = ["use babel"]
+    notStrictDirectiveTriggers = ["use babel"];
   }
   if (notStrictCommentTriggers === undefined) {
-    notStrictCommentTriggers = ["@babel", "@flow", "* @babel", "* @flow"]
+    notStrictCommentTriggers = ["@babel", "@flow", "* @babel", "* @flow"];
   }
 
   return {
@@ -90,18 +95,18 @@ function handleOptions(options: Options) {
     removeAllUseStrict,
     notStrictDirectiveTriggers,
     notStrictCommentTriggers,
-  }
+  };
 }
 
-function transformNotStrict({ types }: PluginAPI) {
+function transformNotStrict({ types }) {
   return {
     name: "transform-not-strict",
     visitor: {
-      Directive(path: any, state: any) {
-        if (path.node.value.value !== "use strict") return
+      Directive(path, state) {
+        if (path.node.value.value !== "use strict") return;
         if (state.opts.removeAll) {
-          path.node.value.value = "not strict"
-          return
+          path.node.value.value = "not strict";
+          return;
         }
 
         for (const sibling of path.container) {
@@ -110,23 +115,27 @@ function transformNotStrict({ types }: PluginAPI) {
             (sibling.value.value === "not strict" ||
               state.opts.directiveTriggers?.includes(sibling.value.value))
           ) {
-            path.remove()
-            return
+            path.remove();
+            return;
           }
 
-          const comments = [...(sibling.leadingComments ?? []), ...(sibling.trailingComments ?? [])]
-          if (comments.some((comment) => state.opts.commentTriggers?.includes(comment.value.trim()))) {
-            path.remove()
-            return
+          const comments = [
+            ...(sibling.leadingComments ?? []),
+            ...(sibling.trailingComments ?? []),
+          ];
+          if (
+            comments.some((comment) => state.opts.commentTriggers?.includes(comment.value.trim()))
+          ) {
+            path.remove();
+            return;
           }
         }
       },
     },
-  }
+  };
 }
 
-// eslint-disable-next-line no-unused-vars
-module.exports = (_api: ConfigAPI, options: Options, _dirname: string): InputOptions => {
+module.exports = (_api, options, _dirname) => {
   const {
     targets,
     keepModules,
@@ -138,36 +147,38 @@ module.exports = (_api: ConfigAPI, options: Options, _dirname: string): InputOpt
     removeAllUseStrict,
     notStrictDirectiveTriggers,
     notStrictCommentTriggers,
-  } = handleOptions(options)
+  } = handleOptions(options);
 
   const presets = [
     [
-      require("@babel/preset-env") as PresetItem,
+      require("@babel/preset-env"),
       {
         targets,
         modules: keepModules ? false : "commonjs",
       },
     ],
-  ] as PresetItem[]
+  ];
 
   if (react !== false) {
-    const presetReact = require("@babel/preset-react")
+    const presetReact = require("@babel/preset-react");
     // Editor packages still use per-file @jsx pragmas (for example, Etch's
     // `/** @jsx etch.dom */`). Babel 8 defaults to the automatic runtime,
     // which rejects those pragmas, so retain the preset's legacy behavior.
     presets.push(
       typeof react === "object" ? [presetReact, react] : [presetReact, { runtime: "classic" }],
-    )
+    );
   }
 
   if (flow !== false) {
-    const presetFlow = require("@babel/preset-flow")
-    presets.push(typeof flow === "object" ? [presetFlow, flow] : presetFlow)
+    const presetFlow = require("@babel/preset-flow");
+    presets.push(typeof flow === "object" ? [presetFlow, flow] : presetFlow);
   }
 
   if (typescript !== false) {
-    const presetTypeScript = require("@babel/preset-typescript")
-    presets.push(typeof typescript === "object" ? [presetTypeScript, typescript] : presetTypeScript)
+    const presetTypeScript = require("@babel/preset-typescript");
+    presets.push(
+      typeof typescript === "object" ? [presetTypeScript, typescript] : presetTypeScript,
+    );
   }
 
   const plugins = [
@@ -196,17 +207,17 @@ module.exports = (_api: ConfigAPI, options: Options, _dirname: string): InputOpt
 
     // reserved keywords
     require("@babel/plugin-transform-reserved-words"),
-  ] as PluginItem[]
+  ];
 
   // transform modules (e.g when without Rollup)
   if (!keepModules) {
-    plugins.push(require("@babel/plugin-transform-modules-commonjs"))
+    plugins.push(require("@babel/plugin-transform-modules-commonjs"));
 
     if (addModuleExports) {
       plugins.push([
         require("babel-plugin-add-module-exports"),
         { addDefaultProperty: addModuleExportsDefaultProperty },
-      ] as PluginItem) // The editor needs this.
+      ]); // The editor needs this.
     }
   }
 
@@ -217,5 +228,5 @@ module.exports = (_api: ConfigAPI, options: Options, _dirname: string): InputOpt
       setPublicClassFields: true,
       privateFieldsAsProperties: true,
     },
-  }
-}
+  };
+};

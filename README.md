@@ -40,16 +40,16 @@ Use `babel.config.js` if you need more control over the config.
 <summary>babel.config.js version</summary>
 
 ```js
-let presets = ["@lumine-code/babel-preset"]
+let presets = ["@lumine-code/babel-preset"];
 
-let plugins = []
+let plugins = [];
 
 module.exports = {
   presets: presets,
   plugins: plugins,
   exclude: "node_modules/**",
   sourceMap: "inline",
-}
+};
 ```
 
 </details>
@@ -90,7 +90,7 @@ let presets = [
       keepModules: true,
     },
   ],
-]
+];
 ```
 
 </details>
@@ -127,7 +127,7 @@ let presets = [
       },
     },
   ],
-]
+];
 ```
 
 </details>
@@ -160,7 +160,7 @@ let presets = [
       addModuleExports: false,
     },
   ],
-]
+];
 ```
 
 </details>
@@ -193,7 +193,7 @@ let presets = [
       addModuleExportsDefaultProperty: true,
     },
   ],
-]
+];
 ```
 
 </details>
