@@ -7,7 +7,7 @@
   "repository": "https://github.com/lumine-code/babel-preset",
   "bugs": "https://github.com/lumine-code/babel-preset/issues",
   "engines": {
-    "node": ">=20"
+    "node": ">=24"
   },
   "packageManager": "npm@11.16.0",
   "license": "MIT",
