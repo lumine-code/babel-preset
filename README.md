@@ -14,8 +14,7 @@ Provides the shared Babel configuration used to transpile packages.
 npm install --save-dev @lumine-code/babel-preset
 ```
 
-This preset requires `@babel/core` as a peer dependency. Install `@babel/cli`
-alongside it when invoking Babel from the command line:
+This preset requires `@babel/core` as a peer dependency. Install `@babel/cli` alongside it when invoking Babel from the command line:
 
 ```
 npm install --save-dev @babel/core @babel/cli
