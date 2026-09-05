@@ -10,7 +10,7 @@ Provides the shared Babel configuration used to transpile packages.
 
 ## Installation
 
-```
+```sh
 npm install --save-dev @lumine-code/babel-preset
 ```
 
