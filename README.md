@@ -2,6 +2,8 @@
 
 Provides the shared Babel configuration used to transpile packages.
 
+Fork of [pulsar-edit/babel-preset-atomic](https://github.com/pulsar-edit/babel-preset-atomic).
+
 ## Features
 
 - **Modern syntax**: configures Babel transforms for JavaScript, JSX, Flow, and TypeScript.
