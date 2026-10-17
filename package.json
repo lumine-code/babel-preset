@@ -16,7 +16,8 @@
   },
   "main": "./src/index.js",
   "files": [
-    "src"
+    "src",
+    "THIRD_PARTY_NOTICES"
   ],
   "scripts": {
     "test": "jasmine",
