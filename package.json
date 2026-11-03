@@ -27,7 +27,7 @@
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^8.0.2",
     "@babel/plugin-transform-class-properties": "^8.0.1",
-    "@babel/plugin-transform-export-namespace-from": "^8.0.1",
+    "@babel/plugin-transform-export-namespace-from": "^8.1.0",
     "@babel/plugin-transform-json-strings": "^8.0.1",
     "@babel/plugin-transform-logical-assignment-operators": "^8.0.1",
     "@babel/plugin-transform-modules-commonjs": "^8.0.1",
@@ -44,17 +44,17 @@
     "babel-plugin-add-module-exports": "^1.0.4"
   },
   "devDependencies": {
-    "@babel/core": "^8.0.9",
+    "@babel/core": "^8.1.0",
     "@eslint/js": "^10.0.1",
-    "eslint": "^10.13.0",
+    "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-n": "^18.5.0",
-    "globals": "^17.13.0",
+    "globals": "^17.14.0",
     "jasmine": "^7.0.0",
     "prettier": "^3.9.10"
   },
   "peerDependencies": {
-    "@babel/core": "^8.0.9"
+    "@babel/core": "^8.1.0"
   },
   "keywords": [
     "babel",
@@ -65,5 +65,16 @@
     "react",
     "electron",
     "flow"
-  ]
+  ],
+  "overrides": {
+    "eslint@^10.14.0": {
+      "minimatch": "11.0.4"
+    },
+    "@eslint/config-array@0.23.5": {
+      "minimatch": "11.0.4"
+    },
+    "jasmine@^7.0.0": {
+      "glob": "14.0.3"
+    }
+  }
 }
