@@ -29,8 +29,8 @@
     "@babel/plugin-transform-class-properties": "^8.0.1",
     "@babel/plugin-transform-export-namespace-from": "^8.1.0",
     "@babel/plugin-transform-json-strings": "^8.0.1",
-    "@babel/plugin-transform-logical-assignment-operators": "^8.0.1",
-    "@babel/plugin-transform-modules-commonjs": "^8.0.1",
+    "@babel/plugin-transform-logical-assignment-operators": "^8.1.2",
+    "@babel/plugin-transform-modules-commonjs": "^8.1.2",
     "@babel/plugin-transform-nullish-coalescing-operator": "^8.0.1",
     "@babel/plugin-transform-numeric-separator": "^8.0.1",
     "@babel/plugin-transform-optional-chaining": "^8.0.5",
@@ -44,17 +44,17 @@
     "babel-plugin-add-module-exports": "^1.0.4"
   },
   "devDependencies": {
-    "@babel/core": "^8.1.0",
+    "@babel/core": "^8.1.2",
     "@eslint/js": "^10.0.1",
     "eslint": "^10.14.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-n": "^18.5.0",
     "globals": "^17.14.0",
     "jasmine": "^7.0.0",
-    "prettier": "^3.9.10"
+    "prettier": "^3.10.0"
   },
   "peerDependencies": {
-    "@babel/core": "^8.1.0"
+    "@babel/core": "^8.1.2"
   },
   "keywords": [
     "babel",
@@ -68,13 +68,13 @@
   ],
   "overrides": {
     "eslint@^10.14.0": {
-      "minimatch": "11.0.5"
+      "minimatch": "11.0.8"
     },
     "@eslint/config-array@0.23.5": {
-      "minimatch": "11.0.5"
+      "minimatch": "11.0.8"
     },
     "jasmine@^7.0.0": {
-      "glob": "14.0.4"
+      "glob": "14.0.5"
     }
   }
 }
